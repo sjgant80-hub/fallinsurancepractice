@@ -168,22 +168,19 @@ tr.clickable:hover td{background:var(--ink)}
     'llama-3b':  { id: 'Llama-3.2-3B-Instruct-q4f16_1-MLC',   size: '~2GB',   label: '3B · balanced · default · most laptops' },
     'qwen-7b':   { id: 'Qwen2.5-7B-Instruct-q4f16_1-MLC',     size: '~5GB',   label: '7B · capable · needs decent GPU (M-series Mac / 8GB+ VRAM)' },
     'llama-8b':  { id: 'Llama-3.1-8B-Instruct-q4f16_1-MLC',   size: '~5GB',   label: '8B · common · needs decent GPU' },
-    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' },
-  };
+    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' }};
   const DEFAULT_MODEL = 'llama-3b';
 
   const T3_PROVIDERS = {
     anthropic: { label: 'Anthropic Claude', models: ['claude-sonnet-4-5','claude-opus-4-7','claude-haiku-4-5'], default: 'claude-sonnet-4-5', url: 'https://api.anthropic.com/v1/messages' },
     openai:    { label: 'OpenAI',           models: ['gpt-4o','gpt-4o-mini','o1-mini'],                          default: 'gpt-4o-mini',      url: 'https://api.openai.com/v1/chat/completions' },
-    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' },
-  };
+    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' }};
 
   // ─── State ───────────────────────────────────────────────────────
   const STATE = {
     config: loadConfig(),
     ai: { ready: false, loading: false, progress: 0, engine: null, model: null },
-    mesh: { active: false, peers: new Map(), bc: null, signal: null },
-  };
+    mesh: { active: false, peers: new Map(), bc: null, signal: null }};
 
   function loadConfig() {
     try { return JSON.parse(localStorage.getItem('fall-kit.config') || '{}'); }
@@ -250,8 +247,7 @@ tr.clickable:hover td{background:var(--ink)}
     if (tier === 'T2' && STATE.ai.ready && STATE.ai.engine) {
       const r = await STATE.ai.engine.chat.completions.create({
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
-        max_tokens: maxTokens,
-      });
+        max_tokens: maxTokens});
       return r.choices[0].message.content;
     }
     if (tier === 'T3' && STATE.config.api_key && STATE.config.api_provider) {
@@ -268,8 +264,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.anthropic.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('Anthropic ' + r.status + ': ' + (await r.text()).slice(0, 200));
       const j = await r.json();
       return j.content[0].text;
@@ -278,8 +273,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.openai.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('OpenAI ' + r.status);
       const j = await r.json();
       return j.choices[0].message.content;
@@ -288,8 +282,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.google.url + model + ':generateContent?key=' + encodeURIComponent(key), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } }),
-      });
+        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } })});
       if (!r.ok) throw new Error('Google ' + r.status);
       const j = await r.json();
       return j.candidates[0].content.parts[0].text;
@@ -530,8 +523,7 @@ tr.clickable:hover td{background:var(--ink)}
     openMint: openMint,  // v1.2 · launch kcc-mint with this seed prefilled as parent
     MODELS: WEBLLM_MODELS,
     PROVIDERS: T3_PROVIDERS,
-    state: STATE,
-  };
+    state: STATE};
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -598,7 +590,7 @@ const RULES={
  cassMonthlyRedDays:45, // red after 45d
  premiumRemittanceAmberDays:35, // typical 30-60d insurer TOBA window
  premiumRemittanceRedDays:60,
- piMinCoverSingle:1500000, // FCA SYSC / IDD insurance broker: £1.5m single claim
+ piMinCoverSingle:1500000, // FCA SYSC / IDD insurance broker: TBAm single claim
  piMinCoverAggregate:2250000, // 1.5x single = aggregate (FCA minimum)
  fcaFeeMinimum:1500,
  fcaFeeQuarterMonth:7, // FCA invoices July, due August
@@ -620,8 +612,7 @@ const TABS=[
  {id:'advisers',label:'advisers'},
  {id:'firm-pl',label:'firm P&L'},
  {id:'expenses',label:'expenses'},
- {id:'qa',label:'Q&A'},
-];
+ {id:'qa',label:'Q&A'}];
 
 let state={
  active:'dashboard',
@@ -650,9 +641,7 @@ let state={
  isAR:false,
  bankDetails:'',
  conversionRateDefault:0.85, // renewal conversion forecast
- demoLoaded:false,
- },
-};
+ demoLoaded:false}};
 
 // ─── util ───
 const $=(s,p=document)=>p.querySelector(s);
@@ -736,7 +725,7 @@ async function maybeSeedDemo(){
  const polId='pol_demo_'+uid();
  const gross=4500,iptRate=RULES.iptStandard,ipt=Math.round(gross*iptRate),fee=150,commissionPct=15,commission=Math.round((gross)*commissionPct/100);
  const netToInsurer=gross-commission;
- const pol={id:polId,firmId,clientId:cl.id,ts:now()-90*dayMs,updatedAt:now()-90*dayMs,lapsedAt:null,ref:'P-2026-0001',productClass:'commercial-property',insurer:'AXA Commercial',schemeRef:'',policyNumber:'AXA-CP-998877',inceptionDate:isoDate(now()-90*dayMs),renewalDate:isoDate(now()+275*dayMs),expiryDate:isoDate(now()+275*dayMs),status:'in-force',premium:{gross,ipt,fee,commission,net:netToInsurer},commissionPct,sumInsured:1500000,indemnityLimit:0,excess:1000,cover:{summary:'Buildings + contents + business interruption',exclusions:['flood-areas-stated'],endorsements:[]},demandsAndNeeds:'Client requires cover for Birmingham manufacturing site incl BI to £500k',cdSummary:'IPID delivered 2026-03-20',vulnerableCustomerFlag:false,midTermAdjustments:[],claims:[],adviserId:adv.id,demo:true};
+ const pol={id:polId,firmId,clientId:cl.id,ts:now()-90*dayMs,updatedAt:now()-90*dayMs,lapsedAt:null,ref:'P-2026-0001',productClass:'commercial-property',insurer:'AXA Commercial',schemeRef:'',policyNumber:'AXA-CP-998877',inceptionDate:isoDate(now()-90*dayMs),renewalDate:isoDate(now()+275*dayMs),expiryDate:isoDate(now()+275*dayMs),status:'in-force',premium:{gross,ipt,fee,commission,net:netToInsurer},commissionPct,sumInsured:1500000,indemnityLimit:0,excess:1000,cover:{summary:'Buildings + contents + business interruption',exclusions:['flood-areas-stated'],endorsements:[]},demandsAndNeeds:'Client requires cover for Birmingham manufacturing site incl BI to TBAk',cdSummary:'IPID delivered 2026-03-20',vulnerableCustomerFlag:false,midTermAdjustments:[],claims:[],adviserId:adv.id,demo:true};
  state.policies=[pol];await idbPut('policies',pol);
  cl.policiesHeld=[polId];await idbPut('clients',cl);
 
@@ -761,8 +750,7 @@ async function maybeSeedDemo(){
  const expSeed=[
  {id:'ex_'+uid(),month:m,type:'PI insurance accrual',amount:Math.round((state.settings.piAnnualPremium||3600)/12),notes:'Monthly PI accrual',ts:now(),demo:true},
  {id:'ex_'+uid(),month:m,type:'BIBA membership',amount:Math.round((state.settings.bibaAnnualEstimate||495)/12),notes:'BIBA monthly accrual',ts:now(),demo:true},
- {id:'ex_'+uid(),month:m,type:'Software',amount:180,notes:'Acturis / SSP monthly',ts:now(),demo:true},
- ];
+ {id:'ex_'+uid(),month:m,type:'Software',amount:180,notes:'Acturis / SSP monthly',ts:now(),demo:true}];
  state.expenses=expSeed;
  for(const e of state.expenses)await idbPut('expenses',e);
 
@@ -1098,9 +1086,9 @@ Late remittances right now: ${premiumRemittanceLate().length}.`},
 Your IPT posture · ${state.policies.length} policies · total IPT collected: ${money(state.policies.reduce((a,p)=>a+iptForPolicy(p),0))}.`},
  {id:'pi-min',match:/pi (insurance|minimum|cover)|professional indemnit/i,answer:()=>`**PI insurance — FCA SYSC + IDD insurance broker minimums:**
 
-- **Single claim** · €1.3m IDD floor, **£1.5m** is the FCA-set UK figure (≈ ${money(RULES.piMinCoverSingle)})
-- **Aggregate** · €1.85m IDD, **£2.25m** UK (≈ ${money(RULES.piMinCoverAggregate)})
-- Excess: typically £5k-£10k per claim, no cap from FCA but should be appropriate to firm size
+- **Single claim** · €1.3m IDD floor, **TBAm** is the FCA-set UK figure (≈ ${money(RULES.piMinCoverSingle)})
+- **Aggregate** · €1.85m IDD, **TBAm** UK (≈ ${money(RULES.piMinCoverAggregate)})
+- Excess: typically TBA per claim, no cap from FCA but should be appropriate to firm size
 - Must be from a UK or EEA insurer authorised in general insurance
 - **No PI = no FCA permission** — letting cover lapse is a Threshold Conditions breach
 
@@ -1191,8 +1179,7 @@ ICOBS doesn't run the client money rules itself — **CASS 5** does — but ICOB
 - **ICOBS 6** · post-sale (mid-term changes, renewals)
 - **ICOBS 6A** · mid-term cancellation, premium refunds, cooling-off
 
-And cross-cutting: **Consumer Duty (PRIN 2A)** since July 2023 for retail + SME — fair value assessment on broker fees + commission.`},
-];
+And cross-cutting: **Consumer Duty (PRIN 2A)** since July 2023 for retail + SME — fair value assessment on broker fees + commission.`}];
 
 async function answerQuestion(q){
  for(const r of T0_RULES){if(r.match.test(q))return{src:'T0 · UK insurance broker rules engine',text:r.answer()}}
@@ -1777,8 +1764,7 @@ async function addPolicy(data){
  cover:{summary:data.coverSummary||'',exclusions:[],endorsements:[]},
  demandsAndNeeds:data.demandsAndNeeds||'',
  cdSummary:data.cdSummary||'',
- vulnerableCustomerFlag:false,midTermAdjustments:[],claims:[],
- };
+ vulnerableCustomerFlag:false,midTermAdjustments:[],claims:[]};
  state.policies.push(p);await idbPut('policies',p);
  broadcastUpsert('policy.created',p);
  await appendAudit('policy.created','New policy · '+p.ref,p);
@@ -1796,8 +1782,7 @@ async function addCAEntry(data){
  source:data.source||'premium-in',
  notes:data.notes||'',
  reconciledAt:null,
- advisorId:data.advisorId||state.selectedAdviserId||'',
- };
+ advisorId:data.advisorId||state.selectedAdviserId||''};
  state.clientAccount.push(e);await idbPut('clientAccount',e);
  broadcastClientAccountEntry(e);
  await appendAudit('cass.entry.'+e.direction,e.source+' · '+moneyP(e.amount),e);
@@ -1814,8 +1799,7 @@ async function addOAEntry(data){
  direction:data.direction||'in',
  amount:+data.amount||0,
  source:data.source||'commission-in',
- notes:data.notes||'',
- };
+ notes:data.notes||''};
  state.officeAccount.push(e);await idbPut('officeAccount',e);
  await appendAudit('office.entry.'+e.direction,e.source+' · '+moneyP(e.amount),e);
  return e;
@@ -1842,8 +1826,7 @@ async function doReconcile(data){
  internalBalance:internal,
  discrepancy:disc,
  supportingDocsSha256:docsHash,
- notes:data.notes||'',
- };
+ notes:data.notes||''};
  state.reconciliations.push(r);await idbPut('reconciliations',r);
  // mark all unreconciled CA entries up to now as reconciled
  for(const e of state.clientAccount){if(!e.reconciledAt){e.reconciledAt=now();await idbPut('clientAccount',e)}}
@@ -1878,8 +1861,7 @@ async function addClient(data){
  kyc:{status:'pending',riskGrade:'low',pepFlag:false,pepDetails:'',sanctionsStatus:'not-checked',sanctionsCheckedAt:null,sanctionsCheckedBy:'',sourceOfFunds:'',sourceOfFundsNotes:'',sourceOfWealth:'',sourceOfWealthNotes:'',vulnerableCustomerFlag:false,vulnerabilityCategory:'',vulnerabilityNotes:'',documentsHeld:[],lastReviewAt:null,nextReviewDue:null},
  adviserId:data.adviserId||state.selectedAdviserId||'',
  engagement:{startedAt:now(),type:'ongoing',feeBasis:'commission',feeAgreementHash:'',feeAgreementSignedAt:null,initialFee:0,ongoingFee:0,nextReviewDue:null},
- notes:[],links:{},
- };
+ notes:[],links:{}};
  state.clients.push(c);await idbPut('clients',c);
  broadcastUpsert('client.created',c);
  await appendAudit('client.created','New client',c);
@@ -1893,8 +1875,7 @@ async function addAdviser(data){
  name:data.name||'',email:data.email||'',phone:'',
  fcaRefNo:data.fcaRefNo||'',smcrRole:data.smcrRole||'SMF22',
  cpdHours:+data.cpdHours||0,iddCompliance:!!data.iddCompliance,
- status:'active',startedAt:now(),leftAt:null,
- };
+ status:'active',startedAt:now(),leftAt:null};
  state.advisers.push(a);await idbPut('advisers',a);
  broadcastUpsert('adviser.created',a);
  await appendAudit('adviser.created','New adviser',a);
@@ -1934,8 +1915,7 @@ async function seedMonthlyAccruals(){
  {type:'PI insurance accrual',amount:piMonthlyAccrual(),notes:'Monthly accrual seeded'},
  {type:'FCA fee accrual',amount:fcaMonthlyAccrual(),notes:'Monthly accrual seeded'},
  {type:'BIBA membership',amount:bibaMonthlyAccrual(),notes:'Monthly accrual seeded'},
- {type:'AML supervision',amount:amlMonthlyAccrual(),notes:'Monthly accrual seeded'},
- ];
+ {type:'AML supervision',amount:amlMonthlyAccrual(),notes:'Monthly accrual seeded'}];
  for(const l of lines){
  if(!l.amount)continue;
  // skip if same type already exists for month
@@ -2089,8 +2069,7 @@ async function submitNewPolicy(){
  sumInsured:+$('#m_sumInsured').value,
  excess:+$('#m_excess').value,
  demandsAndNeeds:$('#m_demandsAndNeeds').value,
- cdSummary:$('#m_cdSummary').value,
- };
+ cdSummary:$('#m_cdSummary').value};
  if(!d.clientId||!d.insurer||!d.gross){toast('client, insurer + gross required');return}
  await addPolicy(d);
  closeModal();
@@ -2103,8 +2082,7 @@ async function submitCAEntry(direction){
  direction,
  amount:+$('#m_amount').value,
  source:$('#m_source').value,
- notes:$('#m_notes').value,
- };
+ notes:$('#m_notes').value};
  if(!d.policyId||!d.amount){toast('policy + amount required');return}
  await addCAEntry(d);
  closeModal();
@@ -2141,8 +2119,7 @@ async function submitReconcile(){
  advisorId:$('#m_advisorId').value,
  bankBalance:+$('#m_bankBalance').value,
  supportingDocs:$('#m_supportingDocs').value,
- notes:$('#m_notes').value,
- };
+ notes:$('#m_notes').value};
  await doReconcile(d);
 }
 
@@ -2151,8 +2128,7 @@ async function submitNewClient(){
  title:$('#m_title').value,firstName:$('#m_firstName').value,lastName:$('#m_lastName').value,
  email:$('#m_email').value,phone:$('#m_phone').value,
  industry:$('#m_industry').value,companiesHouseNo:$('#m_companiesHouseNo').value,
- adviserId:$('#m_adviserId').value,
- };
+ adviserId:$('#m_adviserId').value};
  if(!d.firstName||!d.lastName){toast('name required');return}
  await addClient(d);closeModal();
 }
@@ -2160,8 +2136,7 @@ async function submitNewAdviser(){
  const d={
  name:$('#m_name').value,email:$('#m_email').value,
  fcaRefNo:$('#m_fcaRefNo').value,smcrRole:$('#m_smcrRole').value,
- cpdHours:+$('#m_cpdHours').value,iddCompliance:$('#m_iddCompliance').checked,
- };
+ cpdHours:+$('#m_cpdHours').value,iddCompliance:$('#m_iddCompliance').checked};
  if(!d.name){toast('name required');return}
  await addAdviser(d);closeModal();
 }
@@ -2240,8 +2215,7 @@ async function submitSettings(){
  piInsurer:$('#s_piInsurer').value,piPolicyNo:$('#s_piPolicyNo').value,
  piCoverSingle:+$('#s_piCoverSingle').value,piCoverAggregate:+$('#s_piCoverAggregate').value,
  piExpiresAt:$('#s_piExpiresAt').value?new Date($('#s_piExpiresAt').value).getTime():null,
- piAnnualPremium:+$('#s_piAnnualPremium').value,
- };
+ piAnnualPremium:+$('#s_piAnnualPremium').value};
  await saveFirmSettings(firmData);
  state.settings.piAnnualPremium=+$('#s_piAnnualPremium').value;
  state.settings.fcaAnnualEstimate=+$('#s_fcaAnnualEstimate').value;

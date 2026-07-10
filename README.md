@@ -45,7 +45,7 @@ Monthly commission - network levy (if AR) - recorded expenses - accruals (PI / F
 
 ### PI insurance tracking
 
-FCA SYSC minimum for insurance brokers: **£1.5M single claim, £2.25M aggregate** (higher than IFA minimums). Insurer / policy / cover / expiry / annual premium. Monthly accrual baked into firm P&L. Amber 60d, red 30d before expiry.
+FCA SYSC minimum for insurance brokers: **TBAM single claim, TBAM aggregate** (higher than IFA minimums). Insurer / policy / cover / expiry / annual premium. Monthly accrual baked into firm P&L. Amber 60d, red 30d before expiry.
 
 ### FCA / BIBA / AML fees
 
@@ -110,7 +110,7 @@ On commission receipt from a sibling (`commission.received`): auto-creates an `o
 - `PRIME = 857`
 - Tax year `2025-26`
 - CASS 5 amber 25d / red 45d
-- PI min single £1.5M / aggregate £2.25M
+- PI min single TBAM / aggregate TBAM
 - IPT standard 0.12 / higher 0.20
 - Stale balance 180d
 
