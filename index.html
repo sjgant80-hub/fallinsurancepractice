@@ -590,7 +590,7 @@ const RULES={
  cassMonthlyRedDays:45, // red after 45d
  premiumRemittanceAmberDays:35, // typical 30-60d insurer TOBA window
  premiumRemittanceRedDays:60,
- piMinCoverSingle:1500000, // FCA SYSC / IDD insurance broker: TBAm single claim
+ piMinCoverSingle:1500000, // FCA SYSC / IDD insurance broker: £1.5m single claim
  piMinCoverAggregate:2250000, // 1.5x single = aggregate (FCA minimum)
  fcaFeeMinimum:1500,
  fcaFeeQuarterMonth:7, // FCA invoices July, due August
@@ -1086,8 +1086,8 @@ Late remittances right now: ${premiumRemittanceLate().length}.`},
 Your IPT posture · ${state.policies.length} policies · total IPT collected: ${money(state.policies.reduce((a,p)=>a+iptForPolicy(p),0))}.`},
  {id:'pi-min',match:/pi (insurance|minimum|cover)|professional indemnit/i,answer:()=>`**PI insurance — FCA SYSC + IDD insurance broker minimums:**
 
-- **Single claim** · €1.3m IDD floor, **TBAm** is the FCA-set UK figure (≈ ${money(RULES.piMinCoverSingle)})
-- **Aggregate** · €1.85m IDD, **TBAm** UK (≈ ${money(RULES.piMinCoverAggregate)})
+- **Single claim** · €1.3m IDD floor, **£1.5m** is the FCA-set UK figure (≈ ${money(RULES.piMinCoverSingle)})
+- **Aggregate** · €1.85m IDD, **£2.25m** UK (≈ ${money(RULES.piMinCoverAggregate)})
 - Excess: typically TBA per claim, no cap from FCA but should be appropriate to firm size
 - Must be from a UK or EEA insurer authorised in general insurance
 - **No PI = no FCA permission** — letting cover lapse is a Threshold Conditions breach
